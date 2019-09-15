@@ -10,17 +10,17 @@ The SQL folder contains MySQL scripts to create users, permissions, and database
 ## Project structure
 
 [] RoverChallenge
-  [] dataflow
-      *gather_and_store.py* -main code for application
-      *settings.py*         -application config file  
-      *mysql_wrapper.py*    -helper to wrap calls to MySQL
-      *csv_serializer.py*   -helper to sanitize data before sending sql command as text
-  [] SQL
-    [] procs  -contains procedure script used for data visualization
-    [] schema -contains scripts (MySQL) that create *rover* db & schema
-    [] users  -contains script to create user and GRANT permissions
-  *requirements.txt*            -used by pip to install project
-  *RoverChallenge_Answers.docx* -answers to Rover Challenge questions
+  - [] dataflow
+  -   - *gather_and_store.py* -main code for application
+  -   - *settings.py*         -application config file  
+  -   - *mysql_wrapper.py*    -helper to wrap calls to MySQL
+  -   - *csv_serializer.py*   -helper to sanitize data before sending sql command as text
+  - [] SQL
+  -   - [] procs  -contains procedure script used for data visualization
+  -   - [] schema -contains scripts (MySQL) that create *rover* db & schema
+  -   - [] users  -contains script to create user and GRANT permissions
+  - *requirements.txt*            -used by pip to install project
+  - *RoverChallenge_Answers.docx* -answers to Rover Challenge questions
 
 
 ## Version 1.0 features
@@ -39,13 +39,13 @@ Oh man!  I knew it would be slow, but I didn't realize how slow.  It takes almos
 
 
 ## Usage
-
-Arguments:  
-| Arg                       | Required | Description                            |
-| ------------------------- | ---------| -------------------------------------- |
-| -t  or --import_topic     | Yes      | Specify data import topic, ex. pet_license        |
-| --initialize              | No       | To import ALL data from scratch or truncate target and start over, add --initialize |
-| -l or --log               | No       | Specify logging file with path. If none specified, logging messages print to console output. |
+ 
+### Arguments:  
+| Arg | Required | Description                            |
+| :--- | :---:| :--- |
+| -t  or --import_topic | Yes | Specify data import topic, ex. pet_license |
+| --initialize | No | To import ALL data from scratch or truncate target and start over, add --initialize |
+| -l or --log  | No | Specify logging file with path. If none specified, logging messages print to console output. |
 
 ```
 usage: gather_and_store.py [-h] -t IMPORT_TOPIC [--initialize] [-l LOG]

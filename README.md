@@ -9,19 +9,24 @@ The SQL folder contains MySQL scripts to create users, permissions, and database
 
 ## Project structure
 
-[] RoverChallenge
-  - [] dataflow
-  -   - *gather_and_store.py* -main code for application
-  -   - *settings.py*         -application config file  
-  -   - *mysql_wrapper.py*    -helper to wrap calls to MySQL
-  -   - *csv_serializer.py*   -helper to sanitize data before sending sql command as text
-  - [] SQL
-  -   - [] procs  -contains procedure script used for data visualization
-  -   - [] schema -contains scripts (MySQL) that create *rover* db & schema
-  -   - [] users  -contains script to create user and GRANT permissions
-  - *requirements.txt*            -used by pip to install project
-  - *RoverChallenge_Answers.docx* -answers to Rover Challenge questions
-
+  |RoverChallenge
+  ├── sql
+  │   ├── schema  -scripts to create *rover* db & schema
+  │   │   ├── *0_create_db_rover.sql*
+  │   │   ├── *1_create_table_import_log.sql*
+  │   │   └── *2_create_table_pet_license.sql*  
+  │   ├── users
+  │   │   └── *create_user_importuser.sql* -create user/GRANT 
+  │   └── procs
+  │       └── *0_create_proc_GetLicenseCountBySpeciesYear.sql*  -used for data visualization
+  ├── dataflow
+  │   ├── *csv_serializer.py*       -helper to sanitize data 
+  │   ├── *gather_and_store.py*     -main code for application
+  │   ├── *mysql_wrapper.py*        -helper to sanitize data 
+  │   └── *settings.py*             -application config file  
+  ├── *requirements.txt*            -used by pip to install project
+  └── *RoverChallenge_Answers.docx* -answers to Rover Challenge questions
+  
 
 ## Version 1.0 features
 - Ability to use various target data stores

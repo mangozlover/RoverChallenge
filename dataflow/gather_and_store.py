@@ -208,11 +208,10 @@ class GatherAndStore():
                 % (self.dataset_name, self.target_conn['db'], self.target_table)
             self.write_import_log()
 
-            decrementing_row_count = row_count
             offset = 0
             query = base_query
 
-            while offset < row_count:
+            while offset < int(row_count):
                 licenses = self.socrata_client.get(self.dataset_name, query=query)
                 for row in licenses:
                     self.source_curs.append(row.copy())
@@ -222,10 +221,6 @@ class GatherAndStore():
                 # write the rows in the list
                 self.write_rows(offset=offset)
 
-                if decrementing_row_count < self.pull_row_limit:
-                    break
-
-                decrementing_row_count = int(row_count) - int(offset)
                 offset = offset + row_cnt_in_cursor
                 query = base_query + '\n' + 'offset %s' % offset
         else:

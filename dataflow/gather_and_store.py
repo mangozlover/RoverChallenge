@@ -55,7 +55,6 @@ class GatherAndStore():
 
         self.tmp_dir = self.settings.MISC['tmp_dir']
         self.import_log_table = self.settings.MISC['import_log_table']
-        self.row_chunk_size = self.settings.MISC['row_chunk_size']
         self.pull_row_limit = self.settings.MISC['pull_row_limit']
         self.import_logging_sql = self.settings.SQL_CMDS["import_log_sql"]
 
@@ -148,23 +147,15 @@ class GatherAndStore():
         Pull data from socrata endpoint and store in target
         """
         row_count = 0
-        offset = self.row_chunk_size
         query = "select COUNT(*)"
 
         if self.initialize_data:
             self.log_msg("We are initializing the data which"\
                 + " means we will be pulling EVERYTHING!")
 
-            try:
-                self.target_client.execute("truncate table %s;" % self.target_table)
-            except Exception:
-                self.logger.exception("FAILED to truncate source table.")
-
+            self.target_client.execute("truncate table %s;" % self.target_table)
         else:
-            try:
-                result = self.target_client.execute(self.topic_info['filter_sql'], ret=True)[0][0]
-            except Exception:
-                self.logger.exception("FAILED to execute filter_sql.")
+            result = self.target_client.execute(self.topic_info['filter_sql'], ret=True)[0][0]
 
             if not result:
                 self.logger.exception("WARMING!!! Target table is empty.  "\
@@ -221,10 +212,6 @@ class GatherAndStore():
             offset = 0
             query = base_query
 
-            print "START -decrementing_row_count: %s" % decrementing_row_count
-            print "START -offset: %s" % offset
-            print "START -query: %s" % query
-
             while offset < row_count:
                 licenses = self.socrata_client.get(self.dataset_name, query=query)
                 for row in licenses:
@@ -238,18 +225,9 @@ class GatherAndStore():
                 if decrementing_row_count < self.pull_row_limit:
                     break
 
-                print "B4 - decrementing_row_count: %s" % decrementing_row_count
-                print "B4 - offset: %s" % offset
-                print "B4 - query: %s" % query
-
                 decrementing_row_count = int(row_count) - int(offset)
                 offset = offset + row_cnt_in_cursor
                 query = base_query + '\n' + 'offset %s' % offset
-
-                print "AFTR - decrementing_row_count: %s" % decrementing_row_count
-                print "AFTR - offset: %s" % offset
-                print "AFTR - query: %s" % query
-
         else:
             # no need to page, just bring over what's returned
             self.log_msg("Pull all rows without paging. RowCount: %s " % row_count)
@@ -326,15 +304,13 @@ class GatherAndStore():
         self.target_client.execute("INSERT INTO %s.%s (%s) VALUES (%s)" \
             % (self.target_conn['db'], self.target_table, key_str, value_str))
 
+
     def write_import_log(self):
         """
         Write a single row to the import log
         """
-        try:
-            self.implog_client.execute(self.import_logging_sql % (self.implog_row_values))
-        except Exception:
-            self.logger.exception("FAILED to write to import log at host %s %s.%s" \
-                % (self.logging_conn['host'], self.logging_conn['db'], "import_log"), **LOGGING)
+        self.implog_client.execute(self.import_logging_sql % (self.implog_row_values))
+
 
     def run(self):
         """
@@ -342,9 +318,7 @@ class GatherAndStore():
             socrata_pull -> write_rows (wrapper loop) -> write_row
         """
         self.log_msg("Starting module GatherAndStore... ")
-
         self.socrata_pull()
-
         self.log_msg("Module GatherAndStore successfully completed!")
 
 

@@ -49,7 +49,7 @@ IMPORT_TOPICS = {
         'dataset_name': 'jguv-t9rb',
         'target_type': 'mysql',
         'target_conn': 'MYSQL_TARGET_1',
-        'target_table': 'pet_license',
+        'target_table': 'pet_license_1',
         'target_string_columns': 'pet_license_number, animal_s_name, species, primary_breed, secondary_breed, zip_code',
         'target_date_columns': 'license_issue_date',
         'filter_soql': "where license_issue_date > '%s'",
@@ -83,7 +83,6 @@ MISC = {
     'quit_signal': signal.SIGTERM,
     'tmp_dir':'/mnt/c/Temp/',
     'import_log_table': 'import_log',
-    'row_chunk_size': 1000,
     'pull_row_limit': 1000
 }
 

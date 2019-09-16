@@ -2,9 +2,7 @@
 """
 Utilities to encode and serialize
 """
-import json
 import re
-import time
 
 class EscapedNewlineFilter:
     """

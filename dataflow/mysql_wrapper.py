@@ -1,25 +1,9 @@
-import argparse
-import datetime
-import calendar
-import socket
-import json
-import logging
-import logging.handlers
-import os
-import glob
-import stat
-import subprocess
-import sys
-import tempfile
-import time
-import signal
-import gc
-import MySQLdb
-
-import settings
-
+"""
+Utilities to make MySQL calls
+"""
 from warnings import filterwarnings
-from settings import LOGGING
+
+import MySQLdb
 
 class MySQLWrapper:
 

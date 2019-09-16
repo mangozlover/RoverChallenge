@@ -6,7 +6,7 @@ import signal
 LOGGING = {
     "level":  logging.INFO,
     "format": "[%(asctime)s %(process)d] %(levelname)s  %(message)s",
-    "directory": "/log/"
+    "directory": ""
 }
 
 TARGET_CONN = {

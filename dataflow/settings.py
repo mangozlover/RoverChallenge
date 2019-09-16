@@ -49,7 +49,7 @@ IMPORT_TOPICS = {
         'dataset_name': 'jguv-t9rb',
         'target_type': 'mysql',
         'target_conn': 'MYSQL_TARGET_1',
-        'target_table': 'pet_license_1',
+        'target_table': 'pet_license',
         'target_string_columns': 'pet_license_number, animal_s_name, species, primary_breed, secondary_breed, zip_code',
         'target_date_columns': 'license_issue_date',
         'filter_soql': "where license_issue_date > '%s'",
